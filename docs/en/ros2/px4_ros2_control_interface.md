@@ -548,7 +548,8 @@ If you want to control an actuator that does not control the vehicle's motion, b
 
 The [VTOL API](https://auterion.github.io/px4-ros2-interface-lib/classpx4__ros2_1_1Vtol.html) provides the functionality to command a transition and query the current state of the vehicle.
 
-Use this API with caution: commanding transitions externally makes the user partially responsible for ensuring smooth and safe behavior, unlike onboard transitions (e.g. via RC switch) where PX4 handles the full process.
+Use this API with caution!
+Commanding transitions externally makes the user partially responsible for ensuring smooth and safe behavior, unlike onboard transitions (e.g. via RC switch) where PX4 handles the full process.
 
 1. Ensure that both the [`TrajectorySetpointType`](https://auterion.github.io/px4-ros2-interface-lib/classpx4__ros2_1_1TrajectorySetpointType.html) and the `FwLateralLongitudinalSetpointType` are available to your mode.
 2. Create an instance of `px4_ros2::VTOL` in the constructor of your mode.
