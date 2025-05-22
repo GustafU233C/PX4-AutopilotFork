@@ -410,7 +410,7 @@ This setpoint type is only supported for fixed-wing vehicles.
 :::
 
 Use the [`px4_ros2::FwLateralLongitudinalSetpointType`](https://auterion.github.io/px4-ros2-interface-lib/classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html) to directly control the lateral and longitudinal dynamics of a fixed-wing vehicle — that is, side-to-side motion (turning/banking) and forward/vertical motion (speeding up and climbing/descending), respectively.
-This setpoint is streamed to the PX4 _FwLateralLongitudinalControl_ module, which decouples lateral and longitudinal inputs while ensuring that vehicle limits are respected.
+This setpoint is streamed to the PX4 [_FwLateralLongitudinalControl_ module](https://docs.px4.io/main/en/modules/modules_controller.html#fw-lateral-longitudinal-control), which decouples lateral and longitudinal inputs while ensuring that vehicle limits are respected.
 
 To control the vehicle, at least one lateral **and** one longitudinal setpoint must be provided:
 
@@ -451,7 +451,7 @@ const float course = 0.F; // due North
 _fw_lateral_longitudinal_setpoint->updateWithHeightRate(height_rate, course);
 ```
 
-The `updateWithAltitude()` method allows you to additionally control the equivalent airspeed or lateral acceleration by specifying them as the third and fourth arguments, respectively:
+The `updateWithAltitude()` and `updateWithHeightRate()` methods allow you to additionally control the equivalent airspeed or lateral acceleration by specifying them as the third and fourth arguments, respectively:
 
 ```cpp
 const float altitude_msl = 500.F;
@@ -466,7 +466,6 @@ _fw_lateral_longitudinal_setpoint->updateWithAltitude(altitude_msl,
 ```
 
 The equivalent airspeed and lateral acceleration arguments are defined as `std::optional<float>`, so you can omit any of them by passing `std::nullopt`.
-This is possible for both the `updateWithAltitude` and the `updateWithHeightRate` method.
 
 ::: tip
 If both lateral acceleration and course setpoints are provided, the lateral acceleration setpoint will be used as feedforward.
@@ -548,7 +547,8 @@ If you want to control an actuator that does not control the vehicle's motion, b
 <Badge type="warning" text="Experimental" />
 
 The [VTOL API](https://auterion.github.io/px4-ros2-interface-lib/classpx4__ros2_1_1Vtol.html) provides the functionality to command a transition and query the current state of the vehicle.
-This is intended for advanced users.
+
+Use this API with caution: commanding transitions externally makes the user partially responsible for ensuring smooth and safe behavior, unlike onboard transitions (e.g. via RC switch) where PX4 handles the full process.
 
 1. Ensure that both the [`TrajectorySetpointType`](https://auterion.github.io/px4-ros2-interface-lib/classpx4__ros2_1_1TrajectorySetpointType.html) and the `FwLateralLongitudinalSetpointType` are available to your mode.
 2. Create an instance of `px4_ros2::VTOL` in the constructor of your mode.
