@@ -477,9 +477,9 @@ For full flexibility, you can create and pass a `FwLateralLongitudinalSetpoint` 
 Each field is templated with `std::optional<float>`.
 
 ::: tip
-If both course and airspeed direction are set, course is not controlled.
+If both course and airspeed direction are set: airspeed direction takes precedence, course is not controlled.
 Lateral acceleration is treated as feedforward if either course or airspeed direction are also finite.
-If both altitude and height rate are set, altitude is not controlled.
+If both altitude and height rate are set: height rate takes precedence, altitude is not controlled.
 :::
 
 ```cpp
