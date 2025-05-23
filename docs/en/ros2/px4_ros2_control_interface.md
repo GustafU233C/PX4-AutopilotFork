@@ -544,12 +544,19 @@ If you want to control an actuator that does not control the vehicle's motion, b
 
 <Badge type="warning" text="Experimental" />
 
-The [VTOL API](https://auterion.github.io/px4-ros2-interface-lib/classpx4__ros2_1_1Vtol.html) provides the functionality to command a transition and query the current state of the vehicle.
+To control a VTOL in an external flight mode, ensure you're returning the correct setpoint type based on the current flight configuration:
+
+- Multicopter mode: use a setpoint type that is compatible with multicopter control. For example: either the [`GotoSetpointType`](#go-to-setpoint-gotosetpointtype) or the [`TrajectorySetpointType`](https://auterion.github.io/px4-ros2-interface-lib/classpx4__ros2_1_1TrajectorySetpointType.html).
+- Fixed-wing mode: Use the [`FwLateralLongitudinalSetpointType`](#fixed-wing-lateral-and-longitudinal-setpoint-fwlaterallongitudinalsetpointtype).
+
+As long as the VTOL remains in either multicopter or fixed-wing mode throughout the external mode, no additional handling is required.
+
+If you would like to command a VTOL transition in your external mode, you need to use the [VTOL API](https://auterion.github.io/px4-ros2-interface-lib/classpx4__ros2_1_1Vtol.html). The VTOL API provides the functionality to command a transition and query the current state of the vehicle.
 
 Use this API with caution!
-Commanding transitions externally makes the user partially responsible for ensuring smooth and safe behavior, unlike onboard transitions (e.g. via RC switch) where PX4 handles the full process.
+Commanding transitions externally makes the user partially responsible for ensuring smooth and safe behavior, unlike onboard transitions (e.g. via RC switch) where PX4 handles the full process:
 
-1. Ensure that both the [`TrajectorySetpointType`](https://auterion.github.io/px4-ros2-interface-lib/classpx4__ros2_1_1TrajectorySetpointType.html) and the `FwLateralLongitudinalSetpointType` are available to your mode.
+1. Ensure that both the `TrajectorySetpointType` and the `FwLateralLongitudinalSetpointType` are available to your mode.
 2. Create an instance of `px4_ros2::VTOL` in the constructor of your mode.
 3. To command a transition, you can use the `toMulticopter()` or `toFixedwing()` methods on your VTOL object to set the desired state.
 4. During transition, send the following combination of setpoints:
