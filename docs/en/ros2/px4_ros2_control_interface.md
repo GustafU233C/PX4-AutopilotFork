@@ -525,10 +525,8 @@ All configuration fields are defined as `std::optional<float>`.
 Unset values will default to the PX4 configuration.
 See [LateralControlConfiguration](../msg_docs/LateralControlConfiguration.md) and [FixedWingLongitudinalConfiguration](../msg_docs/LongitudinalControlConfiguration.md) for more information on configuration options.
 
-:::warning Overrides must remain within valid system constraints.
-For example, throttle limits must stay between [`FW_THR_MIN`](../advanced_config/parameter_reference.md#FW_THR_MIN).
-and [`FW_THR_MAX`](../advanced_config/parameter_reference.md#FW_THR_MIN).
-PX4 will disregard any configuration overrides that do not respect system constaints.
+:::info For safety, PX4 automatically limits configuration values to stay within the vehicle’s constraints. For example, throttle overrides are clamped to remain between [`FW_THR_MIN`](../advanced_config/parameter_reference.md#FW_THR_MIN)
+and [`FW_THR_MAX`](../advanced_config/parameter_reference.md#FW_THR_MAX).
 :::
 
 #### Direct Actuator Control Setpoint (DirectActuatorsSetpointType)
