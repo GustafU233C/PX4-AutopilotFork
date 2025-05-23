@@ -406,7 +406,7 @@ _goto_setpoint->update(
 <Badge type="warning" text="Fixed wing only" />
 
 ::: info
-This setpoint type is only supported for fixed-wing vehicles.
+This setpoint type is supported for fixed-wing vehicles and for VTOLs in fixed-wing mode.
 :::
 
 Use the [`px4_ros2::FwLateralLongitudinalSetpointType`](https://auterion.github.io/px4-ros2-interface-lib/classpx4__ros2_1_1FwLateralLongitudinalSetpointType.html) to directly control the lateral and longitudinal dynamics of a fixed-wing vehicle — that is, side-to-side motion (turning/banking) and forward/vertical motion (speeding up and climbing/descending), respectively.
